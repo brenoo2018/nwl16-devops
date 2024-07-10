@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: nwl16-devops-deployment
+  labels:
+    app: nwl16-devops
+
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: nwl16-devops
+  template:
+    metadata:
+      labels:
+        app: nwl16-devops
+    spec:
+      containers:
+        - name: nwl16-devops
+          image: brenoo2018/nwl16-devops:d24cc62
+          env:
+            - name: JOURNEY_DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-connection
+                  key: db_user
+            - name: JOURNEY_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-connection
+                  key: db_password
+            - name: JOURNEY_DATABASE_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: db-connection
+                  key: db_host
+            - name: JOURNEY_DATABASE_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: db-connection
+                  key: db_port
+            - name: JOURNEY_DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-connection
+                  key: db_name
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: '256Mi'
+              cpu: '200m'
+            limits:
+              memory: '256Mi'
+              cpu: '300m'
