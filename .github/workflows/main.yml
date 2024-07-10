@@ -32,8 +32,16 @@ jobs:
         run: docker build -t brenoo2018/nwl16-devops:${{ steps.generate_sha.outputs.sha }} .
 
       # enviar imagem pro container registry
-      - name: 'Push docker image'
-        run: |
-          docker push brenoo2018/nwl16-devops:${{ steps.generate_sha.outputs.sha }}
-          docker tag brenoo2018/nwl16-devops:${{ steps.generate_sha.outputs.sha }} brenoo2018/nwl16-devops:latest
-          docker push brenoo2018/nwl16-devops:latest
+      - name: 'Build and Push'
+        uses: 'docker/build-push-action@v6'
+        with:
+          context: .
+          push: true
+          tags: |
+            brenoo2018/nwl16-devops:${{ steps.generate_sha.outputs.sha }}
+            brenoo2018/nwl16-devops:latest
+      # - name: 'Push docker image'
+      #   run: |
+      #     docker push brenoo2018/nwl16-devops:${{ steps.generate_sha.outputs.sha }}
+      #     docker tag brenoo2018/nwl16-devops:${{ steps.generate_sha.outputs.sha }} brenoo2018/nwl16-devops:latest
+      #     docker push brenoo2018/nwl16-devops:latest
