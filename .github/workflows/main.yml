@@ -13,5 +13,17 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v4
 
+      - name: 'Generate SHA'
+        id: 'generate_sha'
+        run: |
+          SHA=$(echo $GITHUB_SHA | head -c7)
+          echo "sha=$SHA" >> $GITHUB_OUTPUT
+
       - name: 'Build docker image'
-        run: docker build -t brenoo2018/nwl16-devops:latest .
+        run: docker build -t brenoo2018/nwl16-devops:${{ steps.generate_sha.outputs.sha }} .
+
+      # - name: 'Login to DockerHub'
+      #   run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      # - name: 'Push docker image'
+      #   run: docker push brenoo2018/nwl16-devops:${{ steps.generate_sha.outputs.sha  .
