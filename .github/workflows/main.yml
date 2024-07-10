@@ -13,17 +13,25 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v4
 
+      # pegar último commit dinâmico
       - name: 'Generate SHA'
         id: 'generate_sha'
         run: |
           SHA=$(echo $GITHUB_SHA | head -c7)
           echo "sha=$SHA" >> $GITHUB_OUTPUT
 
+      # logar no container registry
+      - name: 'Login to DockerHub'
+        uses: 'docker/login-action@v3'
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # utiliza commit
       - name: 'Build docker image'
         run: docker build -t brenoo2018/nwl16-devops:${{ steps.generate_sha.outputs.sha }} .
 
-      # - name: 'Login to DockerHub'
-      #   run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+      # enviar imagem pro container registry
 
       # - name: 'Push docker image'
       #   run: docker push brenoo2018/nwl16-devops:${{ steps.generate_sha.outputs.sha  .
