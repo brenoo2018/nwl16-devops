@@ -7,6 +7,7 @@ on:
 
 jobs:
   build-and-push:
+    if: ${{ !contains(github.event.head_commit.message, 'Update tag in values helm') }}
     name: 'Build and Push'
     runs-on: ubuntu-latest
     steps:
@@ -64,4 +65,4 @@ jobs:
           propertyPath: 'image.tag'
           value: ${{ steps.generate_sha.outputs.sha }}
           commitChange: true
-          message: 'New: Update tag in values helm'
+          message: '[skip ci] Update tag in values helm'
