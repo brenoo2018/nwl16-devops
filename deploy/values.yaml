@@ -2,7 +2,7 @@ replicaCount: 10
 image:
   repository: brenoo2018/nwl16-devops
   pullPolicy: IfNotPresent
-  tag: 062a17f
+  tag: daa7e6c
   containerPort: 8080
 imagePullSecrets: []
 nameOverride: ''
