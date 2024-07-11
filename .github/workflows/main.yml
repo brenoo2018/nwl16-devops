@@ -53,3 +53,15 @@ jobs:
       #     docker push brenoo2018/nwl16-devops:${{ steps.generate_sha.outputs.sha }}
       #     docker tag brenoo2018/nwl16-devops:${{ steps.generate_sha.outputs.sha }} brenoo2018/nwl16-devops:latest
       #     docker push brenoo2018/nwl16-devops:latest
+
+      - name: 'Update Image Helm'
+        uses: 'fjogeleit/yaml-update-action@main'
+        with:
+          branch: release
+          targetBranch: main
+          createPR: true
+          valueFile: 'deploy/values.yaml'
+          propertyPath: 'image.tag'
+          value: ${{ steps.generate_sha.outputs.sha }}
+          commitChange: true
+          message: 'New: Update tag in values helm'
