@@ -1,32 +1,24 @@
 replicaCount: 10
-
 image:
   repository: brenoo2018/nwl16-devops
   pullPolicy: IfNotPresent
-  tag: 'd24cc62'
+  tag: 7a4947c
   containerPort: 8080
-
 imagePullSecrets: []
 nameOverride: ''
 fullnameOverride: ''
-
 serviceAccount:
   create: true
   automount: true
   annotations: {}
   name: ''
-
 podAnnotations: {}
 podLabels: {}
-
 podSecurityContext: {}
-
 securityContext: {}
-
 service:
   type: LoadBalancer
   port: 80
-
 ingress:
   enabled: false
   className: ''
@@ -37,7 +29,6 @@ ingress:
         - path: /
           pathType: ImplementationSpecific
   tls: []
-
 resources:
   limits:
     cpu: 200m
@@ -45,32 +36,13 @@ resources:
   requests:
     cpu: 100m
     memory: 256Mi
-
-# livenessProbe:
-#   httpGet:
-#     path: /
-#     port: http
-# readinessProbe:
-#   httpGet:
-#     path: /
-#     port: http
-
 autoscaling:
   enabled: true
   minReplicas: 10
   maxReplicas: 15
   targetCPUUtilizationPercentage: 75
-
 volumes: []
-
-# Additional volumeMounts on the output Deployment definition.
 volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
-
 nodeSelector: {}
-
 tolerations: []
-
 affinity: {}
